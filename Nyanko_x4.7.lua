@@ -101,8 +101,9 @@ function Main()
     end, err);
     xpcall(function()
         K0(4, base, 0x210, "XP", 999999999);
-        E(gg.getResults(2), "XP");
-        E(gg.getResults(2, 2), "NP");
+        local cnt = gg.getResultsCount();
+        E(gg.getResults(2, cnt-4), "XP");
+        E(gg.getResults(2, cnt-2), "NP");
         gg.toast("XP・NP成功");
     end, err);
     xpcall(function()
@@ -139,6 +140,8 @@ function Main()
         E(gg.getResults(18, 18), "城の素材");
         gg.toast("城の素材成功");
     end, err);
+
+    print(data["XP"]);
     print("Script制作: 蓮斗");
     gg.setVisible(true);
     os.exit();
