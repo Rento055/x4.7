@@ -139,8 +139,6 @@ function Main()
         E(gg.getResults(18, 18), "城の素材");
         gg.toast("城の素材成功");
     end, err);
-
-    print(data["XP"]);
     print("Script制作: 蓮斗");
     gg.setVisible(true);
     os.exit();
