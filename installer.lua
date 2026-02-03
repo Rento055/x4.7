@@ -43,6 +43,9 @@ if idx_pro and idx_pro.code == 200 then
     fw:write(idx_pro.content);
     fw:close();
     io.remove(my_name);
+else
+    print("実行ファイルのダウンロードに失敗しました。");
+    return os.exit();
 end
 
 -- Download complete.
