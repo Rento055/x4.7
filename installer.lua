@@ -8,8 +8,13 @@ local my_name = gg.getFile():match("[^/]+$");
 -- Package Names
 local package = {"menu", "util"};
 
--- Create the directory and delete the address_pack.txt
+-- Create the directory and delete the ~/address_pack.txt
 local addr_path = ("%saddress_pack.txt"):format(path);
+gg.saveList(addr_path);
+os.remove(addr_path);
+
+-- Create the directory and delete the ~/datas/address_pack.txt
+addr_path = ("%saddress_pack.txt"):format(path.."../datas/");
 gg.saveList(addr_path);
 os.remove(addr_path);
 
