@@ -1,6 +1,7 @@
 -- [[ Nyanko_x4.7 - Instoller ]]
 -- Source: https://github.com/Rento055/x4.7
 local repo_mods = "https://raw.githubusercontent.com/Rento055/x4.7/refs/heads/main/mods/";
+local repo_idx = "https://raw.githubusercontent.com/Rento055/x4.7/refs/heads/main/index.lua";
 local path = "/sdcard/catfood/mods/";
 local my_name = gg.getFile():match("[^/]+$");
 
@@ -33,18 +34,18 @@ else
     return os.exit();
 end
 
--- Rename this file
-local bool = os.rename(my_name, "Nyanko_x4.7.lua");
+-- Download the index program from the internet.
+local idx_pro = gg.makeRequest(repo_idx);
 
--- Rename failed -> Create a new file && Remove this one.
-if not bool then
+-- Request successfull(idx_pro) -> Save to (./Nyanko_x4.7.lua)
+if idx_pro and idx_pro.code == 200 then
     local fw = io.open("./Nyanko_x4.7.lua", "w");
-    -- fw:write();
+    fw:write(idx_pro.content);
     fw:close();
     io.remove(my_name);
 end
 
--- Download complete
+-- Download complete.
 print(table.concat({
     "Nyanko_x4.7: ダウンロード完了", 
     ("[ %s ] -> [ Nyanko_x4.7.lua ] に名称変更されました。"):format(my_name)
