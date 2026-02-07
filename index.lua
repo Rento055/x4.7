@@ -130,6 +130,7 @@ end
 -- Setup
 util:set_base_address();
 menu:load_data();
+util:update_values();
 gg.setVisible(true);
 
 -- Maintain execution
