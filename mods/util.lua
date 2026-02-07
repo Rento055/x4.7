@@ -10,10 +10,32 @@ local util = {};
 -- Config data management
 util.data = {};
 
+util.set_base_address = function()
+    if base then
+        return 0;
+    end
+    -- Retrieve lib file and time zone
+    local lib = gg.getRangesList("libnative-lib.so:bss");
+    local t = os.time();
+    local time_zone = os.difftime(t, os.time(os.date("!*t", t)));
+
+    --Set base address
+    if lib and lib[1] then
+        gg.clearResults();
+        gg.searchNumber(math.tointeger(time_zone), 4, false, 536870912, lib[1].start, lib[1]["end"]);
+        base = gg.getResults(1)[1].address;
+    else
+        gg.alert("Cb版apkを使用してください。");
+        return os.exit();
+    end
+end
+
 -- util.conf_updateは実行時の更新処理のみ。
 -- configの書き換えはutil.dataを直接変更後、gg.saveVariable(util.data, conf_path)でファイル保存(推奨)
 util.conf_update = function(self, _spec)
     gg.toast("更新開始");
+
+    util:set_base_address();
 
     -- 各項目の実行及びデータの新規保存、値の抽出
     self.data = menu:setup();
