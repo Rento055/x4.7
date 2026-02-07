@@ -132,7 +132,8 @@ local time_zone = os.difftime(t, os.time(os.date("!*t", t)));
 
 --Set base address
 if lib and lib[1] then
-    gg.searchNumber(time_zone, 4, false, 536870912, lib[1].start, lib[1]["end"]);
+    gg.clearResults();
+    gg.searchNumber(math.tointeger(time_zone), 4, false, 536870912, lib[1].start, lib[1]["end"]);
     base = gg.getResults(1)[1].address;
 else
     gg.alert("Cb版apkを使用してください。");
