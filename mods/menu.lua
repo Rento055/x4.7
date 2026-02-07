@@ -1,16 +1,14 @@
 -- [[ Nyanko_x4.7 - Module(menu) ]]
 -- Source: https://github.com/Rento055/x4.7
 
--- ※モジュールの仕様を変更する場合(特に既存プログラム)、x4.7(正規版)の実行時にconf.luaの自動更新は行われません。
--- > 変更箇所を反映するには「スクリプト設定」->「数値のデータ更新」を実行してください。
+-- ※モジュールの仕様を変更する場合、x4.7(正規版)の実行時にconf.luaの自動更新は行われません。
+-- > 変更箇所が反映されない場合には「スクリプト設定」->「数値のデータ更新」を実行してください。
 
 local menu = {
     version = gg.getTargetInfo().versionName:gsub("%.", "_");
     path = "/sdcard/catfood/datas/?.lua", 
     datas = {}
 };
-
--- 起動時decryptで数値更新
 
 menu.load_data = function(self)
     if not package.searchpath(self.version, self.path) then
