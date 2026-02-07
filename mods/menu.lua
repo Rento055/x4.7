@@ -3,15 +3,13 @@
 
 -- ※モジュールの仕様を変更する場合(特に既存プログラム)、x4.7(正規版)の実行時にconf.luaの自動更新は行われません。
 -- > 変更箇所を反映するには「スクリプト設定」->「数値のデータ更新」を実行してください。
-local version_name = gg.getTargetInfo().versionName;
 local menu = {
-    version = version_name:gsub("%.", "_");
+    version = gg.getTargetInfo().versionName:gsub("%.", "_");
     path = "/sdcard/catfood/datas/?.lua", 
     datas = {}
 };
 
--- menu.datasはそのまま
--- 保存時、ロード時にオフセット変換
+-- 起動時decryptで数値更新
 
 menu.load_data = function(self)
     if not package.searchpath(self.version, self.path) then
@@ -34,7 +32,7 @@ end
 
 menu.setup = function(self)
     local new_conf = {
-        ["version"] = self.version, 
+        ["version"] = gg.getTargetInfo().versionName, 
         ["menu_names"] = {"basic", "option"}, 
     };
     local datas = {{
