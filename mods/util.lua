@@ -38,7 +38,7 @@ util.gen_menu = function(self, menu_name)
 end
 
 util.exe = function(self, data, val)
-    data.value = menu[data.key.."b"](val);
+    data.value = menu[data.key](val);
 end
 
 util.input_type = function(self)
