@@ -3,20 +3,33 @@
 
 -- ※モジュールの仕様を変更する場合(特に既存プログラム)、x4.7(正規版)の実行時にconf.luaの自動更新は行われません。
 -- > 変更箇所を反映するには「スクリプト設定」->「数値のデータ更新」を実行してください。
-
+local version_name = gg.getTargetInfo().versionName;
 local menu = {
-    version = gg.getTargetInfo().versionName;
+    version = version_name:gsub("%.", "_");
     path = "/sdcard/catfood/datas/?.lua", 
     datas = {}
 };
+
+-- menu.datasはそのまま
+-- 保存時、ロード時にオフセット変換
 
 menu.load_data = function(self)
     if not package.searchpath(self.version, self.path) then
         gg.toast("更新開始");
         menu:setup();
-    else
-        self.datas = dofile(self.path:gsub("?", self.version));
     end
+
+    -- 数値更新
+    local v = dofile(self.path:gsub("?", self.version));
+    for s, t in pairs(v) do
+        if s == "base" then goto continue;end
+        for i = 1, #t do
+            t[i].address = t[i].address - v.base + base;
+        end
+        self.datas[s] = gg.getValues(t);
+        ::continue::
+    end
+    self.datas.base = base;
 end
 
 menu.setup = function(self)
@@ -64,6 +77,7 @@ menu.setup = function(self)
     end
 
     -- データ保存
+    self.datas.base = base;
     local save_path = self.path:gsub("?", self.version);
     gg.saveVariable(self.datas, save_path);
 
@@ -114,6 +128,9 @@ end
 menu.catfood = function(key, val)
     local t = menu.datas[key];
     menu.datas[key] = gg.getValues(menu.datas[key]);
+    if not val then
+        return decrypt(t);
+    end
     t[1].name, t[2].name = "ネコ缶", "ネコ缶0";
     t[1].freeze, t[2].freeze = true, true;
     t[1].value, t[2].value = encrypt(val);
@@ -134,7 +151,7 @@ end
 
 menu.noarmal_ticket_b = function(key)
 
-    return decrypt(res);
+    return 100;
 end
 
 menu.noarmal_ticket = function(key, val)
@@ -144,7 +161,7 @@ end
 
 menu.rare_ticket_b = function(key)
 
-    return decrypt(res);
+    return 100;
 end
 
 menu.rare_ticket = function(key, val)
@@ -154,7 +171,7 @@ end
 
 menu.stage_flag_b = function(key)
 
-    return decrypt(res);
+    return 100;
 end
 
 menu.stage_flag = function(key, val)
@@ -164,7 +181,7 @@ end
 
 menu.char_flag_b = function(key)
 
-    return decrypt(res);
+    return 100;
 end
 
 menu.char_flag = function(key, val)
@@ -174,7 +191,7 @@ end
 
 menu.char_level_b = function(key)
 
-    return decrypt(res);
+    return 100;
 end
 
 menu.char_level = function(key, val)
@@ -184,7 +201,7 @@ end
 
 menu.char_form_b = function(key)
 
-    return decrypt(res);
+    return 100;
 end
 
 menu.char_form = function(key, val)
@@ -194,7 +211,7 @@ end
 
 menu.char_des_b = function(key)
 
-    return decrypt(res);
+    return 100;
 end
 
 menu.char_des = function(key, val)
@@ -204,7 +221,7 @@ end
 
 menu.treasure_b = function(key)
 
-    return decrypt(res);
+    return 100;
 end
 
 menu.treasure = function(key, val)
@@ -214,7 +231,7 @@ end
 
 menu.np_b = function(key)
 
-    return decrypt(res);
+    return 100;
 end
 
 menu.np = function(key, val)
@@ -224,7 +241,7 @@ end
 
 menu.items_b = function(key)
 
-    return decrypt(res);
+    return 100;
 end
 
 menu.items = function(key, val)
@@ -234,7 +251,7 @@ end
 
 menu.catseye_b = function(key)
 
-    return decrypt(res);
+    return 100;
 end
 
 menu.catseye = function(key, val)
@@ -244,7 +261,7 @@ end
 
 menu.catvitan_b = function(key)
 
-    return decrypt(res);
+    return 100;
 end
 
 menu.catvitan = function(key, val)
