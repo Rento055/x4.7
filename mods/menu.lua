@@ -53,8 +53,8 @@ menu.setup = function(self)
     -- データ挿入
     for i = 1, #datas do
         for s, t in ipairs(datas[i]) do
-            self[t.key.."_b"]();
-            t.value = t.type == "number" and self[t.key]();
+            self[t.key.."_b"](t.key);
+            t.value = t.type == "number" and self[t.key](t.key);
         end
     end
 
@@ -70,131 +70,172 @@ menu.setup = function(self)
     return new_conf;
 end
 
--- Search address
-menu.catfood_b = function()
+local function decrypt(vals)
+    local sum = 0;
+    local v1 = vals[1].value + (vals[1].value < 0 and 2^32 or 0);
+    local v2 = vals[2].value + (vals[2].value < 0 and 2^32 or 0);
+    for i = 24, 0, -8 do
+        local x1, x2 = math.floor(v1/2^(i)), v2%2^8;
+        v1, v2 = v1%2^i, math.floor(v2/2^8);
+        x1 = math.tointeger(x1 - (2^7 <= x1 and 2^8 or 0));
+        x2 = math.tointeger(x2 - (2^7 <= x2 and 2^8 or 0));
+        local xor = x1 ~ x2;
+        sum = sum + (xor + (xor < 0 and 2^8 or 0))*2^i;
+    end
+    return sum;
+end
 
+local function encrypt(num)
+    num = tonumber(num);
+    local v2 = math.random(2^29) + (num/2^30 == 0 and 2^30 or 0);
+    local v1 = decrypt({{["value"] = num}, {["value"] = v2}});
+    v1 = v1 - (2^31 <= v1 and 2^32 or 0);
+    return (2^31 <= v1 and v1 - 2^32 or v1), v2;
+end
+
+-- n > 0
+local function gen_search_group(n)
+    local min, max = -256, 256;
+    local rand = ("%d~~%d;"):format(min, max):rep(n);
+    return ("0;%s0::%d"):format(rand, 4*n + 5);
+end
+
+-- Search address
+menu.catfood_b = function(key)
+    gg.clearResults();
+    gg.searchNumber(gen_search_group(2), 4, false, 536870912, base-0x200, base);
+    gg.refineNumber("-256~~256", 4);
+    menu.datas[key] = gg.getResults(2);
 end
 
 -- Return value
-menu.catfood = function(val)
-
-    print("Rx: "..(val or 0));
-    return 58999;
+menu.catfood = function(key, val)
+    local t = menu.datas[key];
+    menu.datas[key] = gg.getValues(menu.datas[key]);
+    if not val then
+        return decrypt(t);
+    end
+    t[1].name, t[2].name = "ネコ缶", "ネコ缶0";
+    t[1].freeze, t[2].freeze = true, true;
+    t[1].value, t[2].value = encrypt(val);
+    gg.addListItems(t);
+    gg.toast("猫缶成功");
+    return decrypt(t);
 end
 
-menu.xp_b = function()
+menu.xp_b = function(key)
 
 end
 
-menu.xp = function(val)
+menu.xp = function(key, val)
 
     return 100;
 end
 
-menu.noarmal_ticket_b = function()
+menu.noarmal_ticket_b = function(key)
 
 end
 
-menu.noarmal_ticket = function(val)
+menu.noarmal_ticket = function(key, val)
 
     return 100;
 end
 
-menu.rare_ticket_b = function()
+menu.rare_ticket_b = function(key)
 
 end
 
-menu.rare_ticket = function(val)
+menu.rare_ticket = function(key, val)
 
     return 100;
 end
 
-menu.stage_flag_b = function()
+menu.stage_flag_b = function(key)
 
 end
 
-menu.stage_flag = function(val)
+menu.stage_flag = function(key, val)
 
     return 100;
 end
 
-menu.char_flag_b = function()
+menu.char_flag_b = function(key)
 
 end
 
-menu.char_flag = function(val)
+menu.char_flag = function(key, val)
 
     return 100;
 end
 
-menu.char_level_b = function()
+menu.char_level_b = function(key)
 
 end
 
-menu.char_level = function(val)
+menu.char_level = function(key, val)
 
     return 100;
 end
 
-menu.char_form_b = function()
+menu.char_form_b = function(key)
 
 end
 
-menu.char_form = function(val)
+menu.char_form = function(key, val)
 
     return 100;
 end
 
-menu.char_des_b = function()
+menu.char_des_b = function(key)
 
 end
 
-menu.char_des = function(val)
+menu.char_des = function(key, val)
 
     return 100;
 end
 
-menu.treasure_b = function()
+menu.treasure_b = function(key)
 
 end
 
-menu.treasure = function(val)
+menu.treasure = function(key, val)
 
     return 100;
 end
 
-menu.np_b = function()
+menu.np_b = function(key)
 
 end
 
-menu.np = function(val)
+menu.np = function(key, val)
 
     return 100;
 end
 
-menu.items_b = function()
+menu.items_b = function(key)
 
 end
 
-menu.items = function(val)
+menu.items = function(key, val)
 
     return 100;
 end
 
-menu.catseye_b = function()
+menu.catseye_b = function(key)
 
 end
 
-menu.catseye = function(val)
+menu.catseye = function(key, val)
 
     return 100;
 end
 
-menu.catvitan_b = function()
+menu.catvitan_b = function(key)
 
 end
 
-menu.catvitan = function(val)
+menu.catvitan = function(key, val)
 
     return 100;
 end
