@@ -1,6 +1,6 @@
 -- [[ Nyanko_x4.7 - Index File ]]
 -- Source: https://github.com/Rento055/x4.7
-local repo_inst = "https://github.com/Rento055/x4.7/installer.lua";
+local repo_inst = "https://raw.githubusercontent.com/Rento055/x4.7/refs/heads/main/installer.lua";
 local path = "/sdcard/catfood/";
 local conf_path = ("%sconf.lua"):format(path);
 package.path = ("%smods/?.lua"):format(path);
@@ -21,6 +21,7 @@ if not module_exists("util", "menu") then
     xpcall(load(gg.makeRequest(repo_inst).content or "error"), function()
         print("手動でインストールを行ってください。\nソース: "..repo_inst);
     end);
+    gg.setVisible(true);
     return os.exit();
 end
 
