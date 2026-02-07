@@ -38,7 +38,9 @@ util.gen_menu = function(self, menu_name)
 end
 
 util.exe = function(self, data, val)
-    data.value = menu[data.key](val);
+    local value = menu[data.key](data.key, val);
+    data.value = tostring(value);
+    gg.saveVariable(util.data, "/sdcard/catfood/conf.lua");
 end
 
 util.input_type = function(self)
