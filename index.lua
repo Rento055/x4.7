@@ -126,21 +126,8 @@ function dispatch(menu_name)
     return 0;
 end
 
--- Retrieve lib file and time zone
-local lib = gg.getRangesList("libnative-lib.so:bss");
-local t = os.time();
-local time_zone = os.difftime(t, os.time(os.date("!*t", t)));
-
---Set base address
-if lib and lib[1] then
-    gg.clearResults();
-    gg.searchNumber(math.tointeger(time_zone), 4, false, 536870912, lib[1].start, lib[1]["end"]);
-    base = gg.getResults(1)[1].address;
-else
-    gg.alert("Cb版apkを使用してください。");
-    return os.exit();
-end
-
+-- Setup
+util:set_base_address();
 menu:load_data();
 gg.setVisible(true);
 
