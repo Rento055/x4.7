@@ -1,8 +1,8 @@
 -- [[ Nyanko_x4.7 - Module(util) ]]
 -- Source: https://github.com/Rento055/x4.7
 
--- ※モジュールの仕様を変更する場合(特に既存プログラム)、x4.7(正規版)の実行時にconf.luaの自動更新は行われません。
--- > 変更箇所を反映するには「スクリプト設定」->「数値のデータ更新」を実行してください。
+-- ※モジュールの仕様を変更する場合、x4.7(正規版)の実行時にconf.luaの自動更新は行われません。
+-- > 変更箇所が反映されない場合には「スクリプト設定」->「数値のデータ更新」を実行してください。
 
 local menu = require("menu");
 local util = {};
@@ -41,7 +41,6 @@ util.update_values = function(self)
 end
 
 -- util.conf_updateは実行時の更新処理のみ。
--- configの書き換えはutil.dataを直接変更後、gg.saveVariable(util.data, conf_path)でファイル保存(推奨)
 util.conf_update = function(self, _spec)
     gg.toast("更新開始");
 
@@ -56,8 +55,6 @@ util.conf_update = function(self, _spec)
 end
 
 -- util.gen_menu(mnu_name)の返却値はutil[menu_name.."_datas"]に依存します。
--- メニュー項目の追加及び変更は実行ファイルからの操作を推奨しています。
--- 正規ソース及び各端末との互換性を失い、データ損失につながる恐れがある為。
 util.gen_menu = function(self, menu_name)
     local datas = util.data[menu_name.."_datas"];
     local names, values, types = {}, {}, {};
