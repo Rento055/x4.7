@@ -12,6 +12,7 @@ local menu = {
 
 menu.load_data = function(self)
     if not package.searchpath(self.version, self.path) then
+        gg.toast("更新開始");
         menu:setup();
     else
         self.datas = dofile(self.path:gsub("?", self.version));
@@ -53,8 +54,7 @@ menu.setup = function(self)
     -- データ挿入
     for i = 1, #datas do
         for s, t in ipairs(datas[i]) do
-            self[t.key.."_b"](t.key);
-            t.value = t.type == "number" and self[t.key](t.key);
+            t.value = t.type == "number" and self[t.key.."_b"](t.key);
         end
     end
 
@@ -105,16 +105,15 @@ menu.catfood_b = function(key)
     gg.clearResults();
     gg.searchNumber(gen_search_group(2), 4, false, 536870912, base-0x200, base);
     gg.refineNumber("-256~~256", 4);
-    menu.datas[key] = gg.getResults(2);
+    local res = gg.getResults(2);
+    menu.datas[key] = res;
+    return decrypt(res);
 end
 
 -- Return value
 menu.catfood = function(key, val)
     local t = menu.datas[key];
     menu.datas[key] = gg.getValues(menu.datas[key]);
-    if not val then
-        return decrypt(t);
-    end
     t[1].name, t[2].name = "ネコ缶", "ネコ缶0";
     t[1].freeze, t[2].freeze = true, true;
     t[1].value, t[2].value = encrypt(val);
@@ -125,6 +124,7 @@ end
 
 menu.xp_b = function(key)
 
+    return 100;
 end
 
 menu.xp = function(key, val)
@@ -134,6 +134,7 @@ end
 
 menu.noarmal_ticket_b = function(key)
 
+    return decrypt(res);
 end
 
 menu.noarmal_ticket = function(key, val)
@@ -143,6 +144,7 @@ end
 
 menu.rare_ticket_b = function(key)
 
+    return decrypt(res);
 end
 
 menu.rare_ticket = function(key, val)
@@ -152,6 +154,7 @@ end
 
 menu.stage_flag_b = function(key)
 
+    return decrypt(res);
 end
 
 menu.stage_flag = function(key, val)
@@ -161,6 +164,7 @@ end
 
 menu.char_flag_b = function(key)
 
+    return decrypt(res);
 end
 
 menu.char_flag = function(key, val)
@@ -170,6 +174,7 @@ end
 
 menu.char_level_b = function(key)
 
+    return decrypt(res);
 end
 
 menu.char_level = function(key, val)
@@ -179,6 +184,7 @@ end
 
 menu.char_form_b = function(key)
 
+    return decrypt(res);
 end
 
 menu.char_form = function(key, val)
@@ -188,6 +194,7 @@ end
 
 menu.char_des_b = function(key)
 
+    return decrypt(res);
 end
 
 menu.char_des = function(key, val)
@@ -197,6 +204,7 @@ end
 
 menu.treasure_b = function(key)
 
+    return decrypt(res);
 end
 
 menu.treasure = function(key, val)
@@ -206,6 +214,7 @@ end
 
 menu.np_b = function(key)
 
+    return decrypt(res);
 end
 
 menu.np = function(key, val)
@@ -215,6 +224,7 @@ end
 
 menu.items_b = function(key)
 
+    return decrypt(res);
 end
 
 menu.items = function(key, val)
@@ -224,6 +234,7 @@ end
 
 menu.catseye_b = function(key)
 
+    return decrypt(res);
 end
 
 menu.catseye = function(key, val)
@@ -233,6 +244,7 @@ end
 
 menu.catvitan_b = function(key)
 
+    return decrypt(res);
 end
 
 menu.catvitan = function(key, val)
