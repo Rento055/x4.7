@@ -4,6 +4,7 @@ local repo_inst = "https://github.com/Rento055/x4.7/installer.lua";
 local path = "/sdcard/catfood/";
 local conf_path = ("%sconf.lua"):format(path);
 package.path = ("%smods/?.lua"):format(path);
+gg.setVisible(false);
 
 -- Check if the module exists
 local function module_exists(...)
@@ -112,13 +113,13 @@ function dispatch(menu_name)
         -- Checkbox processing
         if mp2[i] == true then
             idx = i + (datas[i].key == "on_off" and 1 or 0);
-            uil:exe(datas[idx], mp2[idx]);
+            util:exe(datas[idx], mp2[idx]);
 
         -- Block string type and i == idx
         elseif type(mp2[i]) ~= "string" or i == idx then
 
         -- Number(prompt type) processing
-        elseif mp2[i] ~= datas[i].value then
+        elseif tonumber(mp2[i]) ~= datas[i].value then
             util:exe(datas[i], mp2[i]);
         end
     end
@@ -141,6 +142,7 @@ else
 end
 
 menu:load_data();
+gg.setVisible(true);
 
 -- Maintain execution
 while true do
