@@ -30,6 +30,16 @@ util.set_base_address = function()
     end
 end
 
+util.update_values = function(self)
+    for _, u in ipairs(self.data.menu_names) do
+        for s, t in pairs(self.data[u.."_datas"]) do
+            if menu.datas[t.key] then
+                t.value = decrypt(menu.datas[t.key]);
+            end
+        end
+    end
+end
+
 -- util.conf_updateは実行時の更新処理のみ。
 -- configの書き換えはutil.dataを直接変更後、gg.saveVariable(util.data, conf_path)でファイル保存(推奨)
 util.conf_update = function(self, _spec)
