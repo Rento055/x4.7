@@ -1,3 +1,5 @@
+local menu = require("menu");
+
 --[[関数定義]]
 local function cretype(len, typ, tbl)
     local n, cash = 1, {};
