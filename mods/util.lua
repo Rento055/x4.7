@@ -18,14 +18,18 @@ util.set_base_address = function()
     local lib = gg.getRangesList("libnative-lib.so:bss");
     local t = os.time();
     local time_zone = os.difftime(t, os.time(os.date("!*t", t)));
+    baset = math.tointeger(time_zone);
 
     --Set base address
     if lib and lib[1] then
         gg.clearResults();
-        gg.searchNumber(math.tointeger(time_zone), 4, false, 536870912, lib[1].start, lib[1]["end"]);
+        gg.searchNumber(baset, 4, false, 536870912, lib[1].start, lib[1]["end"]);
         base = gg.getResults(1)[1].address;
     else
-        gg.alert("Cb版apkを使用してください。");
+        gg.alert(table.concat({
+            "ベースアドレスの取得に失敗しました。\nCb版apkを使用してください。", 
+            "Failed to get base address.\nPlease use the Cb version apk."
+        }, "\n\n"));
         return os.exit();
     end
 end
@@ -33,7 +37,7 @@ end
 util.update_values = function(self)
     for _, u in ipairs(self.data.menu_names) do
         for s, t in pairs(self.data[u.."_datas"]) do
-            if menu.datas[t.key] then
+            if menu.datas[t.key] and t.type == "number" and t.encrypt ~= false then
                 t.value = decrypt(menu.datas[t.key]);
             end
         end
@@ -42,15 +46,13 @@ end
 
 -- util.conf_updateは実行時の更新処理のみ。
 util.conf_update = function(self, _spec)
-    gg.toast("更新開始");
-
     util:set_base_address();
 
     -- 各項目の実行及びデータの新規保存、値の抽出
     self.data = menu:setup();
 
     -- Save config data
-    gg.toast("更新完了");
+    gg.toast("Update completed");
     return gg.saveVariable(util.data, "/sdcard/catfood/conf.lua");
 end
 
@@ -68,20 +70,22 @@ end
 
 util.exe = function(self, data, val)
     local value = menu[data.key](data.key, val);
-    data.value = tostring(value);
-    gg.saveVariable(util.data, "/sdcard/catfood/conf.lua");
+    if data.type == "number" and data.encrypt ~= false then
+        data.value = tostring(value);
+    end
+    -- gg.saveVariable(util.data, "/sdcard/catfood/conf.lua");
 end
 
 util.input_type = function(self)
     local datas = self.data;
     local checked = datas.basic_datas[1].type == "number" and 1 or 2;
     local mp2 = gg.choice({
-        "シークバー(標準)", 
-        "直接入力式"
-    }, checked, "数値の入力形式を選択してください");
+        "シークバー(標準)/Seekbar", 
+        "直接入力式/Direct Input"
+    }, checked, "数値の入力形式を選択してください。\nSelect the input format of numeric data.");
 
     if mp2 == checked then
-        return gg.toast("キャンセル");
+        return gg.toast("Cancelled");
     end
 
     local type = mp2 == 1 and "number" or "not_seek";
@@ -94,7 +98,7 @@ util.input_type = function(self)
             end
         end
     end
-    gg.toast("完了");
+    gg.toast("Completed");
 end
 
 util.data_link = function(self)
