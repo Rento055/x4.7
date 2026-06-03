@@ -160,7 +160,7 @@ if mp41[2] then
     for i = t[5]+1, #t[4] do
         local s = (mp41[i] and t[4][i] ~= "001") and t[4][i] or #char[1];
         local e = gg.getValues({{
-            address = char[1].address + 4*char_num + 2, 
+            address = char[1].address + char_num, 
             flags = 4
         }});
         gg.setValues({{
