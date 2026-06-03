@@ -230,7 +230,7 @@ menu.stage_flag_b = function(key) -- array: ステ開始、ステ最後、全キ
     local res2 = gg.getResults(1, gg.getResultsCount()-1);
     local diff = char[1].address - res2[1].address;
     table.insert(char, 1, table.unpack(gg.getValues({{
-        address = res2[1].address + diff%(3*4)+4, 
+        address = res2[1].address + (diff-4)%(3*4)+4, 
         flags = 4
     }})));
     menu.datas["char_flag"] = char;
