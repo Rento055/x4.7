@@ -1,7 +1,7 @@
 -- [[ Nyanko_x4.7 - Index File ]]
 -- Source: https://github.com/Rento055/x4.7
 local repo_inst = "https://raw.githubusercontent.com/Rento055/x4.7/refs/heads/main/installer.lua";
-local path = "/sdcard/catfood/";
+path = "/sdcard/catfood/";
 local conf_path = ("%sconf.lua"):format(path);
 package.path = ("%smods/?.lua"):format(path);
 gg.setVisible(false);
@@ -17,9 +17,15 @@ end
 
 -- Module Check and Installation
 if not module_exists("util", "menu") then
-    gg.alert("モジュールが見つかりませんでした。\nネットワーク経由でダウンロードできます。");
+    gg.alert(table.concat({
+        "モジュールが見つかりませんでした。\nネットワーク経由でダウンロードできます。", 
+        "The module could not be found.\nIt can be downloaded over the network."
+    }, "\n\n"));
     xpcall(load(gg.makeRequest(repo_inst).content or "error"), function()
-        print("手動でインストールを行ってください。\nソース: "..repo_inst);
+        print(table.concat({
+            "手動でインストールを行ってください。\nソース: "..repo_inst,    -- japanese
+            "Please install manually from "..repo_inst                  -- english
+        }, "\n\n"));
     end);
     gg.setVisible(true);
     return os.exit();
@@ -31,7 +37,10 @@ local util_ok, util = pcall(require, "util");
 
 -- Load error -> delete the files!
 if not menu_ok or not util_ok then
-    gg.alert("モジュールの読み込みに失敗しました。\nスクリプトを再実行してください。");
+    gg.alert(table.concat({
+        "モジュールの読み込みに失敗しました。\nスクリプトを再実行してください。", 
+        "Module loading failed. Please rerun the script."
+    }, "\n\n"));
     os.remove(package.path:gsub("?", "util"));
     os.remove(package.path:gsub("?", "menu"));
     return os.exit();
@@ -43,8 +52,8 @@ local result = package.searchpath(conf_path:match("([^/]+)%.%w+$"), path.."?.lua
 local _;
 
 -- Comfirm the game name
-if target.name ~= "にゃんこ大戦争" then
-    print("プロセス未設定");
+if not (target.name ~= "にゃんこ大戦争" or target.name ~= "The Battle Cats") then
+    print("プロセス未設定/Process not set");
     return os.exit();
 
 -- Search result for the config file
@@ -65,11 +74,11 @@ gg.saveVariable(util.data, conf_path);
 -- [[ main code ]]
 function main()
     local mp = gg.choice({
-        "基本メニュー", 
-        "オプションメニュー", 
-        "スクリプト設定", 
-        "終了"
-    }, 2026, ("にゃんこ大戦争 v%s"):format(target.versionName or "実行環境が不安定です"));
+        "基本メニュー/Basic Menu", 
+        "オプションメニュー/Option Menu", 
+        "スクリプト設定/Settings", 
+        "終了/Exit"
+    }, 2026, ("%s v%s"):format(target.name, target.versionName or "実行環境が不安定です/Unstable Environment"));
 
     if not mp then
 
@@ -82,11 +91,11 @@ function main()
     -- settings
     elseif mp == 3 then
         local mp2 = gg.choice({ 
-            "数値データの更新",     -- 手動または自動で更新
-            "入力形式の変更",       -- gg.promptのNumber型とSeekbar型の変更
-            "アカウント連携",       -- Pastebin連携でアップロードと取り込み対応
-            "戻る"
-        }, 2026, ("にゃんこ大戦争 v%s"):format(target.versionName or "実行環境が不安定です"));
+            "数値データの更新/Update Numeric Data",     -- 手動または自動で更新
+            "入力形式の変更/Change Input Format",       -- gg.promptのNumber型とSeekbar型の変更
+            "アカウント連携/Account Linking",       -- Pastebin連携でアップロードと取り込み対応
+            "戻る/Back"
+        }, 2026, ("%s v%s"):format(target.name, target.versionName or "実行環境が不安定です/Unstable Environment"));
 
         if not mp2 then
         elseif mp2 == 1 then util:conf_update();    -- self(util.data)に変更
@@ -120,7 +129,7 @@ function dispatch(menu_name)
         elseif type(mp2[i]) ~= "string" or i == idx then
 
         -- Number(prompt type) processing
-        elseif tonumber(mp2[i]) ~= datas[i].value then
+        elseif (tonumber(mp2[i]) or mp2[i]) ~= datas[i].value then
             util:exe(datas[i], mp2[i]);
         end
     end
