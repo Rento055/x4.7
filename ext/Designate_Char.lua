@@ -23,7 +23,7 @@ end
 
 --[[主要プログラム]]
 local char = menu.datas["char_flag"];
-local char_num = (char[2].address - char[1].address-4)/3;
+local char_num = (char[2].address - char[1].address)/3;
 local assign = gg.makeRequest("https://battlecats-db.com/unit/status_r_all.html").content;
 local group = gg.makeRequest("https://battlecats-db.com/unit/index_status.html").content;
 local t = {{"キーワード検索(キャラ番号対応)"}, {"save"}, {}, {}, {{}, {}}, {{}, {}}, 0};
