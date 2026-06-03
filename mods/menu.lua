@@ -254,7 +254,7 @@ end
 menu.char_flag = function(key, val)
     local res = menu.datas[key];
     local diff = res[2].address - res[1].address;
-    gg.startFuzzy(4, res[1].address, res[1].address + (diff-4)/3 - 4);
+    gg.startFuzzy(4, res[1].address, res[1].address + diff/3 - 4);
     local res2 = gg.getResults(gg.getResultsCount());
     gg.editAll(res2[1].value, 4);
     return false;
@@ -267,12 +267,12 @@ end
 menu.char_level = function(key, val)    -- キャラ名あるといいね
     local res = menu.datas["char_flag"];
     local diff = res[2].address - res[1].address;
-    -- gg.startFuzzy(4, res[2].address - 2*(diff-4)/3, res[2].address);
+    -- gg.startFuzzy(4, res[2].address - 2*diff/3, res[2].address);
     local level, plus = val:match("^(%d*)%+?(%d*)$");
     level, plus = tonumber(level) or 0, tonumber(plus) or 0;
     local lp = (level > 0 and level-1 or 0)*65536 + plus;
     local v, res2 = {encrypt(lp)}, {};
-    for i = res[2].address - 2*(diff-4)/3 + 4, res[2].address - 8, 8 do
+    for i = res[2].address - 2*diff/3 + 4, res[2].address - 8, 8 do
         res2[#res2+1] = {address = i, flags = 4, freeze = true, name="キャラレベル(Characters Level)", value = v[1]};
         res2[#res2+1] = {address = i+4, flags = 4, freeze = true, name="キャラレベル0(Characters Level 0)", value = v[2]};
     end
@@ -290,7 +290,7 @@ menu.char_form = function(key, val)     -- レベル調整した方が安全
     gg.toast("最大形態を取得します");
     local info = gg.makeRequest("https://battlecats-db.com/unit/frm_final.html").content or "";
     local i, res2 = 1, {};
-    for addr = res[2].address + 4, res[2].address + (diff-4)/3 - 4, 4 do
+    for addr = res[2].address + 4, res[2].address + diff/3 - 4, 4 do
         local n = info:match("<td>"..("%03d"):format(i).."%-([0-6])</td>");
         val, n = tonumber(val), tonumber(n) or 100;
         if val then
@@ -319,9 +319,9 @@ end
 menu.char_delete = function(key, val)
     local res = menu.datas["char_flag"];
     local diff = res[2].address - res[1].address;
-    local e, res2 = gg.getValues({{address = res[1].address + (diff-4)/3, flags = 4}}), {};
+    local e, res2 = gg.getValues({{address = res[1].address + diff/3, flags = 4}}), {};
     local info = gg.makeRequest("https://battlecats-db.com/unit/r_all.html").content or "";
-    for i = 1, (diff-4)/12 do
+    for i = 1, diff/12 do
         if not info:find("<td>"..("%03d"):format(i).."</td>") or i == 674 then
             res2[#res2+1] = {address = res[1].address + (i-1)*4, flags = 4, value = e[1].value};
         end
