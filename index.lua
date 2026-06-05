@@ -52,7 +52,7 @@ local result = package.searchpath(conf_path:match("([^/]+)%.%w+$"), path.."?.lua
 local _;
 
 -- Comfirm the game name
-if not (target.name ~= "にゃんこ大戦争" or target.name ~= "The Battle Cats") then
+if target.name ~= "にゃんこ大戦争" and target.name ~= "The Battle Cats" then
     print("プロセス未設定/Process not set");
     return os.exit();
 
