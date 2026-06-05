@@ -126,7 +126,7 @@ local function val_edit(key, val, name)
     t[1].freeze, t[2].freeze = true, true;
     t[1].value, t[2].value = encrypt(val);
     gg.addListItems(t);
-    return decrypt(t);
+    return decrypt(menu.datas[key]);
 end
 
 local function edit_items(key, val, name)
