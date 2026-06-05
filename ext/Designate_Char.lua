@@ -173,7 +173,7 @@ if mp41[2] then
 end
 
 --[[レベル変更]]
-if mp41[3] ~= "" and tonumber(mp41[4]) or 0 > 0 then
+if mp41[3] ~= "" and (tonumber(mp41[4]) or 0) > 0 then
     local level, plus = mp41[3]:match("^(%d*)%+?(%d*)$");
     level, plus = tonumber(level) or 0, tonumber(plus) or 0;
     local lp = (level > 0 and level-1 or 0)*65536 + plus;
@@ -195,7 +195,7 @@ if mp41[4] ~= "0" then
         local n = info:match("<td>"..("%03d"):format(t[4][i]).."%-([0-6])</td>");
         n = tonumber(n) or 100;
         if mp41[i] then
-            res2[#res2] = {
+            res2[#res2+1] = {
             address = char[2].address + 4*t[4][i], 
             flags = 4, 
             value = (mp41[4] < n and mp41[4] or n) - 1;
