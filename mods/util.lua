@@ -14,23 +14,44 @@ util.set_base_address = function()
     if base then
         return 0;
     end
-    -- Retrieve lib file and time zone
-    local lib = gg.getRangesList("libnative-lib.so:bss");
+    -- Retrive time zone
     local t = os.time();
     local time_zone = os.difftime(t, os.time(os.date("!*t", t)));
     baset = math.tointeger(time_zone);
-
-    --Set base address
-    if lib and lib[1] then
-        gg.clearResults();
-        gg.searchNumber(baset, 4, false, 536870912, lib[1].start, lib[1]["end"]);
-        base = gg.getResults(1)[1].address;
-    else
+    local hex_baset = ("h %02X %02X %02X %02X"):format(
+        baset & 0xFF, (baset >> 8) & 0xFF, (baset >> 16) & 0xFF, (baset >> 24) & 0xFF
+    );
+    -- Search base address
+    local range = 48;   -- Cb, A
+    ::start_i::
+    gg.clearResults();
+    gg.setRanges(range);
+    gg.searchNumber(hex_baset, 1, false, 536870912);
+    local res = gg.getResults(gg.getResultsCount());
+    if #res == 0 then
+        if range == 48 then
+            range = -2080896;   -- O
+            goto start_i;
+        end
         gg.alert(table.concat({
-            "ベースアドレスの取得に失敗しました。\nCb版apkを使用してください。", 
-            "Failed to get base address.\nPlease use the Cb version apk."
+            "ベースアドレスの取得に失敗しました。\nアプリを再起動してください。",
+            "Failed to get base address. \nPlease restart the app."
         }, "\n\n"));
         return os.exit();
+    end
+    -- Refine base address
+    base = res[1].address;
+    for i = 1, #res-8, 4 do
+        local diff = res[i+8].address - res[i+4].address;
+        if diff > 0x3000 and diff < 0x4fff and (function()
+            gg.clearResults();
+            gg.searchNumber(gen_search_group(4), 4, false, 536870912, res[i].address, res[i].address+0x100);
+            gg.refineNumber("-256~~256", 4);
+            return gg.getResultsCount();
+        end)() == 4 then
+            base = res[i].address;
+            break;
+        end
     end
 end
 
