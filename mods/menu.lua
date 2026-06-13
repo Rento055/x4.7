@@ -111,7 +111,7 @@ function encrypt(num)
 end
 
 -- n > 0
-local function gen_search_group(n)
+function gen_search_group(n)
     local min, max = -256, 256;
     local flag = ("%d~%d"):format(min, max);
     local rand = ("%d~~%d;"):format(min, max):rep(n);
