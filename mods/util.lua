@@ -58,9 +58,21 @@ end
 util.update_values = function(self)
     for _, u in ipairs(self.data.menu_names) do
         for s, t in pairs(self.data[u.."_datas"]) do
-            if menu.datas[t.key] and t.type == "number" and t.encrypt ~= false then
+
+            if menu.datas[t.key] and #menu.datas[t.key] == 0 and t.encrypt ~= false then
+                local _, v = xpcall(menu[t.key.."_b"], function()
+                    gg.alert("Setup Error: "..t.key.."\n\n再起動してください。/Please restart the app.");
+                    return nil;
+                end, t.key);
+                t.value = v or t.value;
+                local save_path = menu.path:gsub("?", menu.version);
+                gg.saveVariable(menu.datas, save_path);
+
+            elseif menu.datas[t.key] and t.type == "number" and t.encrypt ~= false then
+                -- print("Decrypting: "..t.key);
                 t.value = decrypt(menu.datas[t.key]);
             end
+            
         end
     end
 end
@@ -90,9 +102,23 @@ util.gen_menu = function(self, menu_name)
 end
 
 util.exe = function(self, data, val)
+    -- 数値があるかチェック
+    if menu.datas[data.key] and #menu.datas[data.key] == 0 and data.encrypt ~= false then
+        local _, v = xpcall(menu[data.key.."_b"], function()
+            gg.alert("Setup Error: "..data.key.."\n\n実行をスキップします。/Execution skipped.");
+            return nil;
+        end, data.key);
+        if not v then
+            return gg.toast("Execution skipped.");
+        end
+        data.value = v or 0;
+        local save_path = menu.path:gsub("?", menu.version);
+        gg.saveVariable(menu.datas, save_path);
+    end
+
     local value = menu[data.key](data.key, val);
     if data.type == "number" and data.encrypt ~= false then
-        data.value = tostring(value);
+        data.value = tostring(val);
     end
     -- gg.saveVariable(util.data, "/sdcard/catfood/conf.lua");
 end

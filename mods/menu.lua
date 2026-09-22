@@ -70,7 +70,12 @@ menu.setup = function(self)
     for i = 1, #datas do
         for s, t in ipairs(datas[i]) do
             -- t.value = t.type == "number" and self[t.key.."_b"](t.key);
-            t.value = self[t.key.."_b"](t.key) or t.value;
+            -- local v = self[t.key.."_b"](t.key);
+            local _, v = xpcall(self[t.key.."_b"], function()
+                gg.alert("Setup Error: "..t.key.."\n\n実行をスキップします。/Execution skipped.");
+                return nil;
+            end, t.key);
+            t.value = v or t.value;
         end
     end
 
