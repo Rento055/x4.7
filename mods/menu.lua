@@ -36,34 +36,34 @@ menu.setup = function(self)
     };
     local datas = {{
         -- Basic menu
-        [1] = {name = "ネコ缶(Catfood) [0;58999]", type = "number", value = "58000", key = "catfood"}, 
+        [1] = {name = "Catfood [0;58999]", type = "number", value = "58000", key = "catfood"}, 
         [2] = {name = "XP [0;99999999]", type = "number", value = "777777777", key = "xp"}, 
-        [3] = {name = "通常チケット(Normal Ticket) [0;999]", type = "number", value = "200", key = "normal_ticket"}, 
-        [4] = {name = "レアチケット(Rare Ticket) [0;999]", type = "number", value = "200", key = "rare_ticket"}, 
-        [5] = {name = "即勝利(Instant Win)", type = "checkbox", value = false, key = "win"},
-        [6] = {name = "全ステージ開放(Unlock All Stages)", type = "checkbox", value = false,  key = "stage_flag"}, 
-        [7] = {name = "戻る(Back)", type = "checkbox", value = false, key = "callmain"}
+        [3] = {name = "Normal Ticket [0;999]", type = "number", value = "200", key = "normal_ticket"}, 
+        [4] = {name = "Rare Ticket [0;999]", type = "number", value = "200", key = "rare_ticket"}, 
+        [5] = {name = "Instant Win", type = "checkbox", value = false, key = "win"},
+        [6] = {name = "Unlock All Stages", type = "checkbox", value = false,  key = "stage_flag"}, 
+        [7] = {name = "Back", type = "checkbox", value = false, key = "callmain"}
     }, {
         -- Option menu
-        [1] = {name = "全キャラ開放(Unlock All Characters)", type = "checkbox", value = false, key = "char_flag"}, 
-        [2] = {name = "全キャラレベル(All Characters Level)\n+値は数値の前に+を記入(例: 20+10)\nInput Example: 20+10", type = "number", value = "", key = "char_level", encrypt = false}, 
-        [3] = {name = "全キャラ形態(All Characters Form) [0;5]", type = "number", value = "2", key = "char_form", encrypt = false}, 
-        [4] = {name = "指定キャラまとめ(Selecta Characters)", type = "checkbox", value = false, key = "char_des"}, 
-        [5] = {name = "エラキャラ削除(Remove Error Characters)", type = "checkbox", value = false, key = "char_delete"}, 
-        [6] = {name = "お宝解放(Unlock Treasures)", type = "checkbox", value = false, key = "treasure"}, 
-        [7] = {name = "施設レベル(Facility Level)\n+値は数値の前に+を記入(例: 20+10)\nInput Example: 20+10", type = "number", value = "", key = "facility_level", encrypt = false}, 
+        [1] = {name = "Unlock All Characters", type = "checkbox", value = false, key = "char_flag"}, 
+        [2] = {name = "All Characters Level\nInput Example: 20+10", type = "number", value = "", key = "char_level", encrypt = false}, 
+        [3] = {name = "All Characters Form [0;5]", type = "number", value = "2", key = "char_form", encrypt = false}, 
+        [4] = {name = "Selecta Characters", type = "checkbox", value = false, key = "char_des"}, 
+        [5] = {name = "Remove Error Characters", type = "checkbox", value = false, key = "char_delete"}, 
+        [6] = {name = "Unlock Treasures", type = "checkbox", value = false, key = "treasure"}, 
+        [7] = {name = "Facility Level\nInput Example: 20+10", type = "number", value = "", key = "facility_level", encrypt = false}, 
         [8] = {name = "NP", type = "checkbox", value = false, key = "on_off"}, 
         [9] = {name = "NP [0;99999]", type = "number", value = "2000", key = "np"}, 
-        [10] = {name = "アイテム(Items)", type = "checkbox", value = false, key = "on_off"}, 
-        [11] = {name = "アイテム(Items) [0;9999]", type = "number", value = "120", key = "items", encrypt = false}, 
-        [12] = {name = "キャッツアイ(Catseye)", type = "checkbox", value = false, key = "on_off"}, 
-        [13] = {name = "キャッツアイ(Catseye) [0;999]", type = "number", value = "30", key = "catseye", encrypt = false}, 
-        [14] = {name = "ネコビタン(Catvitan)", type = "checkbox", value = false, key = "on_off"}, 
-        [15] = {name = "ネコビタン(Catvitan) [0;999]", type = "number", value = "60", key = "catvitan", encrypt = false}, 
-        [16] = {name = "城の素材(Castle Materials)", type = "checkbox", value = false, key = "on_off"}, 
-        [17] = {name = "城の素材(Castle Materials) [0;999]", type = "number", value = "120", key = "castle_material", encrypt = false}, 
-        [18] = {name = "広告非表示(Hide Ads)", type = "checkbox", value = false, key = "no_ads"},
-        [19] = {name = "戻る(Back)", type = "checkbox", value = false, key = "callmain"}
+        [10] = {name = "Items", type = "checkbox", value = false, key = "on_off"}, 
+        [11] = {name = "Items [0;9999]", type = "number", value = "120", key = "items", encrypt = false}, 
+        [12] = {name = "Catseye", type = "checkbox", value = false, key = "on_off"}, 
+        [13] = {name = "Catseye [0;999]", type = "number", value = "30", key = "catseye", encrypt = false}, 
+        [14] = {name = "Catvitan", type = "checkbox", value = false, key = "on_off"}, 
+        [15] = {name = "Catvitan [0;999]", type = "number", value = "60", key = "catvitan", encrypt = false}, 
+        [16] = {name = "Castle Materials", type = "checkbox", value = false, key = "on_off"}, 
+        [17] = {name = "Castle Materials [0;999]", type = "number", value = "120", key = "castle_material", encrypt = false}, 
+        [18] = {name = "Hide Ads", type = "checkbox", value = false, key = "no_ads"},
+        [19] = {name = "Back", type = "checkbox", value = false, key = "callmain"}
     }};
 
     -- データ挿入
@@ -72,7 +72,7 @@ menu.setup = function(self)
             -- t.value = t.type == "number" and self[t.key.."_b"](t.key);
             -- local v = self[t.key.."_b"](t.key);
             local _, v = xpcall(self[t.key.."_b"], function()
-                gg.alert("Setup Error: "..t.key.."\n\n実行をスキップします。/Execution skipped.");
+                gg.alert("Setup Error: "..t.key.."\n\nExecution skipped.");
                 return nil;
             end, t.key);
             t.value = v or t.value;
@@ -157,7 +157,7 @@ end
 
 -- Return value
 menu.catfood = function(key, val)
-    return val_edit(key, val, "ネコ缶(Catfood)");
+    return val_edit(key, val, "Catfood");
 end
 
 menu.xp_b = function(key)
@@ -186,7 +186,7 @@ menu.normal_ticket_b = function(key)
 end
 
 menu.normal_ticket = function(key, val)
-    return val_edit(key, val, "通常チケット(Normal Ticket)");
+    return val_edit(key, val, "Normal Ticket");
 end
 
 menu.rare_ticket_b = function(key)  --> normal_ticket_b
@@ -194,7 +194,7 @@ menu.rare_ticket_b = function(key)  --> normal_ticket_b
 end
 
 menu.rare_ticket = function(key, val)
-    return val_edit(key, val, "レアチケット(Rare Ticket)");
+    return val_edit(key, val, "Rare Ticket");
 end
 
 menu.win_b = function(key)
@@ -204,7 +204,7 @@ end
 menu.win = function(key, val)
     gg.clearResults();
     gg.searchNumber("3200;4400;1~2147483647::29", 4, false, 536870912, base, base+0xffffff);
-    if gg.getResultsCount() < 4 then return gg.alert("試合中に実行してください。\n\nPlease run during a match.");end
+    if gg.getResultsCount() < 4 then return gg.alert("Please run during a match.");end
     local res = gg.getResults(1, gg.getResultsCount()-1);
     gg.addListItems((function()
         res[1].freeze = true;
@@ -278,8 +278,8 @@ menu.char_level = function(key, val)    -- キャラ名あるといいね
     local lp = (level > 0 and level-1 or 0)*65536 + plus;
     local v, res2 = {encrypt(lp)}, {};
     for i = res[2].address - 2*diff/3 + 4, res[2].address - 8, 8 do
-        res2[#res2+1] = {address = i, flags = 4, freeze = true, name="キャラレベル(Characters Level)", value = v[1]};
-        res2[#res2+1] = {address = i+4, flags = 4, freeze = true, name="キャラレベル0(Characters Level 0)", value = v[2]};
+        res2[#res2+1] = {address = i, flags = 4, freeze = true, name="Characters Level", value = v[1]};
+        res2[#res2+1] = {address = i+4, flags = 4, freeze = true, name="Characters Level 0", value = v[2]};
     end
     gg.addListItems(res2);
     return false;
@@ -292,7 +292,7 @@ end
 menu.char_form = function(key, val)     -- レベル調整した方が安全
     local res = menu.datas["char_flag"];
     local diff = res[2].address - res[1].address;
-    gg.toast("最大形態を取得します");
+    gg.toast("Processing...");
     local info = gg.makeRequest("https://battlecats-db.com/unit/frm_final.html").content or "";
     local i, res2 = 1, {};
     for addr = res[2].address + 4, res[2].address + diff/3 - 4, 4 do
@@ -300,7 +300,7 @@ menu.char_form = function(key, val)     -- レベル調整した方が安全
         val, n = tonumber(val), tonumber(n) or 100;
         if val then
             n = val < n and val or n;
-            res2[#res2+1] = {address = addr, flags = 4, name="キャラ形態(Characters Form)", value = n - 1};
+            res2[#res2+1] = {address = addr, flags = 4, name="Characters Form", value = n - 1};
         end
         i = i + 1;
     end
@@ -344,7 +344,7 @@ menu.treasure = function(key, val)
     gg.startFuzzy(4, res[2].address - 500*4 + 4, res[2].address);
     local i, res2 = 0, {};
     for addr = res[2].address - 500*4 + 4, res[2].address, 4 do
-        res2[i] = {address = addr, flags = 4, name = "宝箱(Treasure)", value = i%50 > 47 and 259 or 256};
+        res2[i] = {address = addr, flags = 4, name = "Treasure", value = i%50 > 47 and 259 or 256};
         i = i + 1;
     end
     gg.setValues(res2);
@@ -365,7 +365,7 @@ menu.facility_level = function(key, val)
     if level > 20 then level = 20; end  -- レベル上限
     if plus > 10 then plus = 10; end    -- レベル上限
     local lp = (level > 0 and level-1 or 0)*65536 + plus;
-    edit_items(key, lp, "施設レベル(Facility Level)");
+    edit_items(key, lp, "Facility Level");
     return false;
 end
 
@@ -386,7 +386,7 @@ menu.items_b = function(key)
 end
 
 menu.items = function(key, val)
-    edit_items(key, val, "アイテム(Items)");
+    edit_items(key, val, "Items");
     return false;
 end
 
@@ -403,7 +403,7 @@ menu.catseye_b = function(key)
 end
 
 menu.catseye = function(key, val)
-    edit_items(key, val, "キャッツアイ(Catseye)");
+    edit_items(key, val, "Catseye");
     return false;
 end
 
@@ -412,7 +412,7 @@ menu.catvitan_b = function(key)         --> catseye_b
 end
 
 menu.catvitan = function(key, val)
-    edit_items(key, val, "ネコビタン(Catvitan)");
+    edit_items(key, val, "Catvitan");
     return false;
 end
 
@@ -421,7 +421,7 @@ menu.castle_material_b = function(key)  --> catseye_b
 end
 
 menu.castle_material = function(key, val)
-    edit_items(key, val, "城の素材(Castle Materials)");
+    edit_items(key, val, "Castle Materials");
     return false;
 end
 
@@ -442,13 +442,13 @@ menu.no_ads = function(key, val)
         gg.addListItems({{
             address = gg.getResults(1, gg.getResultsCount()-1)[1].address, 
             flags = 4, 
-            name = "広告非表示(No Ads) "..1, 
+            name = "No Ads "..1, 
             freeze = true, 
             value = -1
         }, {
             address = gg.getResults(1, gg.getResultsCount()-1)[1].address+4, 
             flags = 4, 
-            name = "広告非表示(No Ads) "..1, 
+            name = "No Ads "..1, 
             freeze = true, 
             value = 0
         }});

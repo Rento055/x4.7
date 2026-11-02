@@ -18,12 +18,10 @@ end
 -- Module Check and Installation
 if not module_exists("util", "menu") then
     gg.alert(table.concat({
-        "モジュールが見つかりませんでした。\nネットワーク経由でダウンロードできます。", 
         "The module could not be found.\nIt can be downloaded over the network."
     }, "\n\n"));
     xpcall(load(gg.makeRequest(repo_inst).content or "error"), function()
         print(table.concat({
-            "手動でインストールを行ってください。\nソース: "..repo_inst,    -- japanese
             "Please install manually from "..repo_inst                  -- english
         }, "\n\n"));
     end);
@@ -38,7 +36,6 @@ local util_ok, util = pcall(require, "util");
 -- Load error -> delete the files!
 if not menu_ok or not util_ok then
     gg.alert(table.concat({
-        "モジュールの読み込みに失敗しました。\nスクリプトを再実行してください。", 
         "Module loading failed. Please rerun the script."
     }, "\n\n"));
     os.remove(package.path:gsub("?", "util"));
@@ -53,7 +50,7 @@ local _;
 
 -- Comfirm the game name
 if target.name ~= "にゃんこ大戦争" and target.name ~= "The Battle Cats" then
-    print("プロセス未設定/Process not set");
+    print("Process not set");
     return os.exit();
 
 -- Search result for the config file
@@ -74,11 +71,11 @@ gg.saveVariable(util.data, conf_path);
 -- [[ main code ]]
 function main()
     local mp = gg.choice({
-        "基本メニュー/Basic Menu", 
-        "オプションメニュー/Option Menu", 
-        "スクリプト設定/Settings", 
-        "終了/Exit"
-    }, 2026, ("%s v%s"):format(target.name, target.versionName or "実行環境が不安定です/Unstable Environment"));
+        "Basic Menu", 
+        "Option Menu", 
+        "Settings", 
+        "Exit"
+    }, 2026, ("%s v%s"):format(target.name, target.versionName or "Unstable Environment"));
 
     if not mp then
 
@@ -91,11 +88,11 @@ function main()
     -- settings
     elseif mp == 3 then
         local mp2 = gg.choice({ 
-            "数値データの更新/Update Numeric Data",     -- 手動または自動で更新
-            "入力形式の変更/Change Input Format",       -- gg.promptのNumber型とSeekbar型の変更
-            "アカウント連携/Account Linking",       -- Pastebin連携でアップロードと取り込み対応
-            "戻る/Back"
-        }, 2026, ("%s v%s"):format(target.name, target.versionName or "実行環境が不安定です/Unstable Environment"));
+            "Update Numeric Data",     -- 手動または自動で更新
+            "Change Input Format",       -- gg.promptのNumber型とSeekbar型の変更
+            "Account Linking",       -- Pastebin連携でアップロードと取り込み対応
+            "Back"
+        }, 2026, ("%s v%s"):format(target.name, target.versionName or "Unstable Environment"));
 
         if not mp2 then
         elseif mp2 == 1 then util:conf_update();    -- self(util.data)に変更

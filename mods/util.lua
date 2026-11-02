@@ -34,7 +34,6 @@ util.set_base_address = function()
             goto start_i;
         end
         gg.alert(table.concat({
-            "ベースアドレスの取得に失敗しました。\nアプリを再起動してください。",
             "Failed to get base address. \nPlease restart the app."
         }, "\n\n"));
         return os.exit();
@@ -61,7 +60,7 @@ util.update_values = function(self)
 
             if menu.datas[t.key] and #menu.datas[t.key] == 0 and t.encrypt ~= false then
                 local _, v = xpcall(menu[t.key.."_b"], function()
-                    gg.alert("Setup Error: "..t.key.."\n\n再起動してください。/Please restart the app.");
+                    gg.alert("Setup Error: "..t.key.."\n\nPlease restart the app.");
                     return nil;
                 end, t.key);
                 t.value = v or t.value;
@@ -105,7 +104,7 @@ util.exe = function(self, data, val)
     -- 数値があるかチェック
     if menu.datas[data.key] and #menu.datas[data.key] == 0 and data.encrypt ~= false then
         local _, v = xpcall(menu[data.key.."_b"], function()
-            gg.alert("Setup Error: "..data.key.."\n\n実行をスキップします。/Execution skipped.");
+            gg.alert("Setup Error: "..data.key.."\n\nExecution skipped.");
             return nil;
         end, data.key);
         if not v then
@@ -127,9 +126,9 @@ util.input_type = function(self)
     local datas = self.data;
     local checked = datas.basic_datas[1].type == "number" and 1 or 2;
     local mp2 = gg.choice({
-        "シークバー(標準)/Seekbar", 
-        "直接入力式/Direct Input"
-    }, checked, "数値の入力形式を選択してください。\nSelect the input format of numeric data.");
+        "Seekbar", 
+        "Direct Input"
+    }, checked, "Select the input format of numeric data.");
 
     if mp2 == checked then
         return gg.toast("Cancelled");

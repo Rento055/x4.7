@@ -36,7 +36,6 @@ for _, mod_name in ipairs(package)do
         fw:close();
     else
         print(table.concat({
-            "モジュールのダウンロードに失敗しました。\nネットワーク環境を確認してください。", 
             "Failed to download the module.\nPlease check your network environment."
         }, "\n\n"));
         return os.exit();
@@ -54,7 +53,6 @@ if idx_pro and idx_pro.code == 200 then
     fw:close();
 else
     print(table.concat({
-        "実行ファイルのダウンロードに失敗しました。\nネットワーク環境を確認してください。", 
         "Failed to download the executable file.\nPlease check your network environment."
     }, "\n\n"));
     return os.exit();
@@ -71,7 +69,6 @@ for _, ext_name in ipairs(ext_list) do
         fw:close();
     else
         print(table.concat({
-            "拡張機能のダウンロードに失敗しました。\nネットワーク環境を確認してください。", 
             "Failed to download the extension.\nPlease check your network environment."
         }, "\n\n"));
         return os.exit();
